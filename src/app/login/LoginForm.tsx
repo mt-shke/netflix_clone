@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const LoginForm: React.FC = () => {
    return (
       <form className="flex flex-col gap-4 py-6">
@@ -25,9 +27,11 @@ const LoginForm: React.FC = () => {
                placeholder="Password"
             />
          </label>
-         <button className="w-full px-6 py-3 mt-4 bg-titleRed rounded font-bold">
-            Sign In
-         </button>
+         <Link href={"browse"}>
+            <button className="w-full px-6 py-3 mt-4 bg-titleRed rounded font-bold">
+               Sign In
+            </button>
+         </Link>
       </form>
    );
 };

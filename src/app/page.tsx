@@ -1,5 +1,6 @@
 import HomePage from "./homePage";
 
-export default function Home() {
+const Home: React.FC = () => {
    return <HomePage />;
-}
+};
+export default Home;

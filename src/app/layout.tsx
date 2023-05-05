@@ -15,13 +15,12 @@ export default function RootLayout({
 }) {
    return (
       <html lang="en">
-         <head>
-            <link rel="icon" href="../assets/favicons/favicon.ico" />
-         </head>
-         <body className={inter.className}>
-            <div className="h-screen w-full bg-black text-white">
-               {children}
-            </div>
+         <body
+            className={
+               "min-h-screen w-full text-white bg-black" + inter.className
+            }
+         >
+            {children}
          </body>
       </html>
    );

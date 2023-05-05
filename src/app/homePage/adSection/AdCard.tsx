@@ -8,12 +8,17 @@ type AdType = {
 
 interface IAdCard {
    ad: AdType;
+   index: number;
 }
 
-const AdCard: React.FC<IAdCard> = ({ ad }) => {
+const AdCard: React.FC<IAdCard> = ({ ad, index }) => {
    return (
       <article className="mt-10 sm:grid sm:grid-cols-2 items-center">
-         <div className="h-full flex flex-col sm:items-start sm:py-[10%]">
+         <div
+            className={`h-full flex flex-col sm:items-start sm:py-[10%] ${
+               index % 2 === 1 ? "order-last" : ""
+            }`}
+         >
             <h2 className="font-bold text-3xl">{ad.title}</h2>
             <p className="mt-3">{ad.description}</p>
          </div>

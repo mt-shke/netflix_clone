@@ -5,7 +5,9 @@ import Link from "next/link";
 const Header: React.FC = () => {
    return (
       <header className="w-full flex items-center py-5 px-4">
-         <NetflixLogo />
+         <div className="w-24 md:w-44">
+            <NetflixLogo />
+         </div>
          <div className="flex gap-3 ml-auto mr-0">
             <Select />
             <Link href={"login"}>

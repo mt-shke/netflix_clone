@@ -1,7 +1,7 @@
 const NetflixLogo: React.FC = () => {
    return (
       <svg
-         className="w-20 fill-titleRed"
+         className="w-full fill-titleRed hover:cursor-pointer"
          viewBox="0 0 111 30"
          version="1.1"
          xmlns="http://www.w3.org/2000/svg"

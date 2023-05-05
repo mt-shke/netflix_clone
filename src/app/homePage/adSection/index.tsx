@@ -8,7 +8,7 @@ const AdSection: React.FC = () => {
                {index > 0 ? (
                   <hr className="my-4 border-[4px] opacity-10" />
                ) : null}
-               <AdCard ad={ad} key={ad.imgUrl} />
+               <AdCard ad={ad} key={ad.imgUrl} index={index} />
             </>
          ))}
       </section>

@@ -12,3 +12,14 @@
 
 @layer base {
 }
+@layer components {
+}
+@layer utilities {
+   .scrollWindow::-webkit-scrollbar {
+      display: none;
+   }
+   .scrollWindow {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+   }
+}
