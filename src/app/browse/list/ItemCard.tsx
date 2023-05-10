@@ -14,14 +14,18 @@ type Item = {
 
 const ItemCard: React.FC<IItemCard> = ({ item }) => {
    return (
-      <article className="relative w-[241px] h-[135px] overflow-hidden">
+      <article className={`relative w-full aspect-[16/9]`}>
+         {/* <img
+            className="absolute z-70 inset-0 w-full h-full"
+            alt={item.title}
+            src={item.imgUrl}
+         /> */}
          <Image
-            className="absolute z-70 inset-0 w-full"
+            className="absolute z-30 inset-0 rounded-sm"
+            // fill={true}
             style={{ objectFit: "cover" }}
             width={341}
             height={192}
-            // width={241}
-            // height={135}
             alt={item.title}
             src={item.imgUrl}
          />
