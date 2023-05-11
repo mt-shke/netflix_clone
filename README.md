@@ -7,3 +7,11 @@
 ```js
 // - Scrollable Slider List Component
 ```
+
+react-window package
+
+```js
+// npm i react-window
+// npm i react-virtualized-auto-sizer
+// npm i --save-dev @types/react-window
+```

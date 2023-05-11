@@ -4,7 +4,7 @@ interface IItemCard {
    item: Item;
 }
 
-type Item = {
+export type Item = {
    id: string;
    title: string;
    imgUrl: string;

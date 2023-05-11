@@ -2,12 +2,15 @@
 
 import useWindowWidth from "@/hooks/useWindowWidth";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import ItemsList from "./ItemsList";
 import LeftArrow from "@/components/UI/icons/leftArrow";
 import RightArrow from "@/components/UI/icons/rightArrow";
+import { Item } from "./ItemCard";
 
-// Receive a list(array) of images
+// Receive a list(array) of items{img,title,etc}
+// - List contains 40 items
+
 //OK Display cols of imgs list depending on window width
 // Slider buttons control the list position and displayed imgs
 
@@ -27,33 +30,88 @@ import RightArrow from "@/components/UI/icons/rightArrow";
 // - On Top right, display the current list position with multiple bars
 
 interface IListSlider {
-   data: string[];
-   // data: item[];
-   // todo item type
+   listTitle: string;
+   data: Item[];
 }
 
 // const ListSlider: React.FC<IListSlider> = ({ data = imgs }) => {
-const ListSlider: React.FC = () => {
-   const ref = useRef(null);
+const ListSlider: React.FC<IListSlider> = ({ listTitle, data }) => {
    const [currentPosition, setCurrentPosition] = useState(0);
+   const [itemsToRender, setItemsToRender] = useState(data);
+   const [isTouched, setIsTouched] = useState(false);
+   const originalItems = data.slice(0, 12);
+   const defaultItem = [itemsToRender[0], ...itemsToRender];
+   const lastItemPosition = data.length - 1;
+   const firstItem = originalItems[0];
    const ww = useWindowWidth();
+   // Number of Images displayed on screen
+   const numOfDisplayedItems =
+      ww < 500 ? 2 : ww < 800 ? 3 : ww < 1100 ? 4 : ww < 1400 ? 5 : 6;
+   // Number of items to render on DOM
+   const numOfSliderItems = numOfDisplayedItems * 3 + 2;
+
+   useEffect(() => {
+      setItemsToRender((p) => updateItems());
+   }, [currentPosition]);
+
+   // Should handle how listItems is updated when fetching last items
+   const updateItems = () => {
+      let lastItemToLoad = currentPosition + numOfSliderItems;
+      let restToLoad = 0;
+      if (lastItemToLoad >= lastItemPosition) {
+         restToLoad = lastItemToLoad - lastItemPosition;
+         lastItemToLoad = lastItemPosition;
+         console.log("restToLoad", restToLoad);
+      }
+      const updatedItems = data.slice(currentPosition, lastItemToLoad);
+      return updatedItems;
+   };
+
+   const handleNext = () => {
+      if (!isTouched) {
+         setIsTouched((p) => true);
+      }
+      setCurrentPosition((currentIndex) =>
+         currentPosition + numOfDisplayedItems >= lastItemPosition
+            ? lastItemPosition
+            : currentPosition + numOfDisplayedItems
+      );
+   };
+
+   const handlePrev = () => {
+      setCurrentPosition((currentIndex) =>
+         currentPosition - numOfDisplayedItems <= 0
+            ? 0
+            : currentPosition - numOfDisplayedItems
+      );
+   };
 
    return (
       <section className="w-full min-w-[360px] flex flex-col items-start gap-1 overflow-hidden">
-         <h2 className="font-bold mb-1 lg:text-xl 2xl:text-2xl">My List</h2>
-         <div className="relative w-full flex min-w-[360px] px-4 sm:px-6 md:px-8 lg:px-12">
-            <ItemsList />
-            <span className="absolute z-50 left-0 top-0 h-full w-fit grid place-items-center w-4 sm:w-6 md:w-8 lg:w-12">
-               <LeftArrow className="w-4 sm:w-6 md:w-8 lg:w-12" fill="white" />
-            </span>
-            <span className="absolute z-50 right-0 top-0 h-full w-fit grid place-items-center w-4 sm:w-6 md:w-8 lg:w-12 overflow-hidden">
-               {/* <RightArrow className="w-4 sm:w-6 md:w-8 lg:w-12" fill="white" /> */}
-               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9 16">
-                  <path
-                     d="M 1 0 L 9 8 L 1 16 L 0 15 L 7 8 L 0 1"
+         <h2 className="font-bold mb-1 ml-4 lg:text-lg xl:text-xl">
+            {listTitle}
+         </h2>
+         <div className="group relative w-full flex min-w-[360px] px-4 sm:px-6 md:px-8 lg:px-12">
+            <ItemsList
+               items={!isTouched ? defaultItem : itemsToRender}
+               isTouched={isTouched}
+            />
+            {!!isTouched && (
+               <span
+                  onClick={handlePrev}
+                  className="absolute z-50 left-0 top-0 h-full w-fit grid place-items-center opacity-0 group-hover:opacity-100 group-hover:cursor-pointer transition-all w-4 sm:w-6 md:w-8 lg:w-12"
+               >
+                  <LeftArrow
+                     className="w-4 sm:w-6 md:w-8 lg:w-12"
                      fill="white"
                   />
-               </svg>
+               </span>
+            )}
+            <span
+               onClick={handleNext}
+               className="absolute z-50 right-0 top-0 h-full w-fit grid place-items-center opacity-0 group-hover:opacity-100 group-hover:cursor-pointer transition-all w-4 sm:w-6 md:w-8 lg:w-12"
+            >
+               <RightArrow className="w-4 sm:w-6 md:w-8 lg:w-12" fill="white" />
             </span>
          </div>
       </section>

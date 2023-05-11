@@ -12,8 +12,10 @@
 
 @layer base {
 }
+
 @layer components {
 }
+
 @layer utilities {
    .scrollWindow::-webkit-scrollbar {
       display: none;
