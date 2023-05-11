@@ -27,6 +27,7 @@ module.exports = {
             grey: "#65676b",
             btnRed: "#e50914",
             greenBtn: "#42b72a",
+            btnGrey: "#64686b",
          },
          screens: {
             sm: "440px",
