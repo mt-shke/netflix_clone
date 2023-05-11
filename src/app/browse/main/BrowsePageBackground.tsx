@@ -6,11 +6,11 @@ import { useState } from "react";
 
 const BrowsePageBackground: React.FC = () => {
    const [videoBackground, setVideoBackground] = useState(false);
+
    const toggleVideo = () => {
-      console.log("background activated");
-      setTimeout(() => {
-         setVideoBackground((p) => !p);
-      }, 5000);
+      //   setTimeout(() => {
+      //      setVideoBackground((p) => !p);
+      //   }, 5000);
    };
 
    return (

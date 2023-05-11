@@ -36,25 +36,25 @@ const VideoContainer: React.FC<IVideoContainer> = ({ toggleVideo }) => {
          <div
             onMouseEnter={() => setIsMuted((p) => false)}
             onMouseLeave={() => setIsMuted((p) => true)}
-            onClick={(e) => togglePlay(e)}
+            onClick={(e) => togglePlay()}
             className="absolute z-20 top-0 left-0 right-0 w-full grid items-center aspect-[16/9] bg-gradient-to-b from-bgMainBlack via-10% via-[#1414141A] to-95% to-bgMainBlack"
          >
             <div className="z-50 w-4/5 pt-6 px-8 ml-0 mr-auto md:w-2/3 lg:w-1/2 xl:w-1/3">
-               <h2 className="text-2xl font-bold">Squid Game</h2>
-               <p className="my-2 md:my-4 text-sm md:text-base">
+               <h2 className="text-base md:text-2xl font-bold">Squid Game</h2>
+               <p className="my-1 sm:my-2 md:my-4 text-xs md:text-base">
                   {` Hundreds of cash-strapped players accept a strange invitation to
             compete in children's games. Inside, a tempting prize awaits — with
             deadly high stakes.`}
                </p>
                <div>
                   <button
-                     className="px-4 py-1 mr-1 bg-white hover:opacity-80 text-black font-bold rounded-sm hover:cursor-pointer"
+                     className="px-2 py-0 mr-1 bg-white hover:opacity-80 text-black font-bold rounded-sm hover:cursor-pointer sm:px-4 sm:py-1"
                      disabled
                   >
                      Play Episode
                   </button>{" "}
                   <button
-                     className="px-4 py-1 bg-btnGrey hover:opacity-80 text-black font-bold rounded-sm hover:cursor-pointer"
+                     className="px-2 py-0 bg-btnGrey hover:opacity-80 text-black font-bold rounded-sm hover:cursor-pointer sm:px-4 sm:py-1"
                      disabled
                   >
                      Episodes

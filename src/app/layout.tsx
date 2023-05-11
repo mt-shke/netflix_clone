@@ -16,7 +16,7 @@ export default function RootLayout({
    return (
       <html lang="en">
          <body className={inter.className}>
-            <div className="min-h-screen w-full grid mx-auto text-white bg-bgMainBlack">
+            <div className="min-h-screen w-full h-full grid mx-auto text-white bg-bgMainBlack">
                {children}
             </div>
          </body>
