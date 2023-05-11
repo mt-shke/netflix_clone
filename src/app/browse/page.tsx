@@ -1,3 +1,5 @@
+"use client";
+
 import MainContainer from "@/components/container/MainContainer";
 import PageContainer from "@/components/container/PageContainer";
 import BrowsePageHeader from "./header";
@@ -5,26 +7,44 @@ import ListSlider from "./list/ListSlider";
 import { allItems } from "@/data/data";
 import { shuffleArray } from "@/utils/array";
 import BrowsePageBackground from "./main/BrowsePageBackground";
+import { useEffect, useState } from "react";
 
 const BrowsePage: React.FC = () => {
-   const data1 = allItems;
-   const data2 = shuffleArray([...allItems]);
-   const data3 = shuffleArray([...allItems]);
-   const data4 = shuffleArray([...allItems]);
+   const [isClient, setIsClient] = useState(false);
+   const data = allItems;
+   const data1 = [...data];
+   const data2 = shuffleArray([...data]);
+   const data3 = shuffleArray([...data]);
+   const data4 = shuffleArray([...data]);
+
+   useEffect(() => {
+      setIsClient(true);
+   }, []);
 
    return (
       <PageContainer className="min-h-screen bg-bgMainBlack">
          <BrowsePageHeader />
          <MainContainer className="relative w-full">
             <BrowsePageBackground />
-            <section className="w-full relative z-40 pb-10 flex flex-col gap-6">
-               <ListSlider data={data1} listTitle="My List" />
-               <ListSlider data={data2} listTitle="Random List" />
-               <ListSlider data={data3} listTitle="Trending Now" />
-               <ListSlider data={data4} listTitle="Gems for You" />
-            </section>
+            {!!isClient && (
+               <section className="w-full relative z-40 pb-10 flex flex-col gap-6">
+                  <ListSlider data={data1} listTitle="My List" />
+                  <ListSlider data={data2} listTitle="Random List" />
+                  <ListSlider data={data3} listTitle="Trending Now" />
+                  <ListSlider data={data4} listTitle="Gems for You" />
+               </section>
+            )}
          </MainContainer>
       </PageContainer>
    );
 };
+
 export default BrowsePage;
+
+// export async function getser() {
+//    return {
+//       props: {
+//          data: allItems,
+//       },
+//    };
+// }

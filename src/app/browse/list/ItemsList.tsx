@@ -13,6 +13,7 @@ interface IItemsList {
 const ItemsList: React.FC<IItemsList> = ({ items, isTouched }) => {
    const sliderStartPosition = 0;
    const ww = useWindowWidth();
+
    let displayedImgs =
       ww < 500 ? 2 : ww < 800 ? 3 : ww < 1100 ? 4 : ww < 1400 ? 5 : 6;
 

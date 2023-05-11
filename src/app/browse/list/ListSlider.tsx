@@ -1,7 +1,6 @@
 "use client";
 
 import useWindowWidth from "@/hooks/useWindowWidth";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import ItemsList from "./ItemsList";
 import LeftArrow from "@/components/UI/icons/leftArrow";
@@ -10,7 +9,6 @@ import { Item } from "./ItemCard";
 
 // Receive a list(array) of items{img,title,etc}
 // - List contains 40 items
-
 //OK Display cols of imgs list depending on window width
 // Slider buttons control the list position and displayed imgs
 
@@ -34,7 +32,6 @@ interface IListSlider {
    data: Item[];
 }
 
-// const ListSlider: React.FC<IListSlider> = ({ data = imgs }) => {
 const ListSlider: React.FC<IListSlider> = ({ listTitle, data }) => {
    const [currentPosition, setCurrentPosition] = useState(0);
    const [itemsToRender, setItemsToRender] = useState(data);
@@ -44,15 +41,16 @@ const ListSlider: React.FC<IListSlider> = ({ listTitle, data }) => {
    const lastItemPosition = data.length - 1;
    const firstItem = originalItems[0];
    const ww = useWindowWidth();
+
+   useEffect(() => {
+      setItemsToRender((p) => updateItems());
+   }, [currentPosition]);
+
    // Number of Images displayed on screen
    const numOfDisplayedItems =
       ww < 500 ? 2 : ww < 800 ? 3 : ww < 1100 ? 4 : ww < 1400 ? 5 : 6;
    // Number of items to render on DOM
    const numOfSliderItems = numOfDisplayedItems * 3 + 2;
-
-   useEffect(() => {
-      setItemsToRender((p) => updateItems());
-   }, [currentPosition]);
 
    // Should handle how listItems is updated when fetching last items
    const updateItems = () => {
@@ -61,7 +59,6 @@ const ListSlider: React.FC<IListSlider> = ({ listTitle, data }) => {
       if (lastItemToLoad >= lastItemPosition) {
          restToLoad = lastItemToLoad - lastItemPosition;
          lastItemToLoad = lastItemPosition;
-         console.log("restToLoad", restToLoad);
       }
       const updatedItems = data.slice(currentPosition, lastItemToLoad);
       return updatedItems;
@@ -85,6 +82,10 @@ const ListSlider: React.FC<IListSlider> = ({ listTitle, data }) => {
             : currentPosition - numOfDisplayedItems
       );
    };
+
+   if (!ww) {
+      return <div></div>;
+   }
 
    return (
       <section className="w-full min-w-[360px] flex flex-col items-start gap-1 overflow-hidden">
