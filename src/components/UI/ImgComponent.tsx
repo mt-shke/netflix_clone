@@ -20,12 +20,3 @@ const ImgComponent = (props) => {
    );
 };
 export default ImgComponent;
-
-// Img bg pattern
-// <div className="absolute inset-0">
-// <Image
-// 	src="/background.jpg"
-// 	alt="background image"
-// 	fill
-// />
-// </div>
