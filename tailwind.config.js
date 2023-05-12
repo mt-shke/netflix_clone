@@ -39,6 +39,29 @@ module.exports = {
             sliderlg: "1100px",
             sliderxl: "1400px",
          },
+
+         animation: {
+            fade: "fadeIn .5s ease-in",
+            slideLeft: "slideL .1s ease-in",
+         },
+         keyframes: {
+            fadeIn: {
+               "0%": {
+                  opacity: "0",
+               },
+               "100%": {
+                  opacity: "1",
+               },
+            },
+            slideL: {
+               "0%": {
+                  transform: "translateX(100%)",
+               },
+               "100%": {
+                  translateX: "translateX(0%)",
+               },
+            },
+         },
       },
    },
    plugins: [],

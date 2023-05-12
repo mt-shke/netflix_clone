@@ -6,7 +6,6 @@ import Image from "next/image";
 
 const BrowsePageHeader: React.FC = () => {
    return (
-      // <header className="absolute left-0 right-0 top-0 px-4 z-20 w-full flex items-center py-3 bg-gradient-to-b from-bgMainBlack via-70% via-transparent to-90% to-transparent">
       <header className="absolute z-50 px-4 w-full flex items-center py-3">
          <div className="w-16 md:w-24">
             <NetflixLogo />

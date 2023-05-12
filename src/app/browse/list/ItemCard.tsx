@@ -29,6 +29,8 @@ const ItemCard: React.FC<IItemCard> = ({ item }) => {
             alt={item.title}
             src={item.imgUrl}
          />
+
+         <div></div>
       </article>
    );
 };

@@ -1,11 +1,11 @@
 "use client";
 
-import useWindowWidth from "@/hooks/useWindowWidth";
 import { useEffect, useState } from "react";
 import ItemsList from "./ItemsList";
 import LeftArrow from "@/components/UI/icons/leftArrow";
 import RightArrow from "@/components/UI/icons/rightArrow";
 import { Item } from "./ItemCard";
+import useSlidesImages from "@/hooks/useSlidesImages";
 
 // Receive a list(array) of items{img,title,etc}
 // - List contains 40 items
@@ -27,65 +27,66 @@ import { Item } from "./ItemCard";
 // - On each side, display arrows direction
 // - On Top right, display the current list position with multiple bars
 
-interface IListSlider {
+export interface IListSlider {
    listTitle: string;
    data: Item[];
 }
 
 const ListSlider: React.FC<IListSlider> = ({ listTitle, data }) => {
    const [currentPosition, setCurrentPosition] = useState(0);
-   const [itemsToRender, setItemsToRender] = useState(data);
+   const [itemsToRender, setItemsToRender] = useState<Item[]>([]);
    const [isTouched, setIsTouched] = useState(false);
-   const originalItems = data.slice(0, 12);
-   const defaultItem = [itemsToRender[0], ...itemsToRender];
+   const { numOfDisplayedItems, numOfSliderItems } = useSlidesImages();
+   const originalItems = data;
+   const defaultItems = [originalItems[0], ...originalItems];
    const lastItemPosition = data.length - 1;
-   const firstItem = originalItems[0];
-   const ww = useWindowWidth();
 
    useEffect(() => {
       setItemsToRender((p) => updateItems());
    }, [currentPosition]);
 
-   // Number of Images displayed on screen
-   const numOfDisplayedItems =
-      ww < 500 ? 2 : ww < 800 ? 3 : ww < 1100 ? 4 : ww < 1400 ? 5 : 6;
-   // Number of items to render on DOM
-   const numOfSliderItems = numOfDisplayedItems * 3 + 2;
-
-   // Should handle how listItems is updated when fetching last items
+   // Handle how itemsToRender are updated
    const updateItems = () => {
       let lastItemToLoad = currentPosition + numOfSliderItems;
-      let restToLoad = 0;
-      if (lastItemToLoad >= lastItemPosition) {
-         restToLoad = lastItemToLoad - lastItemPosition;
-         lastItemToLoad = lastItemPosition;
+      if (!isTouched) {
+         return [...originalItems, ...originalItems, ...originalItems].slice(
+            currentPosition,
+            lastItemToLoad
+         );
       }
-      const updatedItems = data.slice(currentPosition, lastItemToLoad);
-      return updatedItems;
+      return [...originalItems, ...originalItems, ...originalItems].slice(
+         currentPosition,
+         lastItemToLoad
+      );
    };
 
+   // Handle arrow buttons
    const handleNext = () => {
       if (!isTouched) {
-         setIsTouched((p) => true);
+         setIsTouched((_) => true);
+         setCurrentPosition(
+            (_) => currentPosition + numOfDisplayedItems + lastItemPosition
+         );
+         return;
       }
-      setCurrentPosition((currentIndex) =>
-         currentPosition + numOfDisplayedItems >= lastItemPosition
-            ? lastItemPosition
-            : currentPosition + numOfDisplayedItems
-      );
+      if (currentPosition > 100) {
+         setCurrentPosition(
+            (_) => currentPosition + numOfDisplayedItems - data.length
+         );
+         return;
+      }
+      setCurrentPosition(() => currentPosition + numOfDisplayedItems);
    };
 
    const handlePrev = () => {
-      setCurrentPosition((currentIndex) =>
-         currentPosition - numOfDisplayedItems <= 0
-            ? 0
-            : currentPosition - numOfDisplayedItems
-      );
+      if (currentPosition < 20) {
+         setCurrentPosition(
+            (_) => currentPosition + numOfDisplayedItems + data.length
+         );
+         return;
+      }
+      setCurrentPosition(() => currentPosition - numOfDisplayedItems);
    };
-
-   if (!ww) {
-      return <div></div>;
-   }
 
    return (
       <section className="w-full min-w-[360px] flex flex-col items-start gap-1 overflow-hidden">
@@ -93,8 +94,9 @@ const ListSlider: React.FC<IListSlider> = ({ listTitle, data }) => {
             {listTitle}
          </h2>
          <div className="group relative w-full flex min-w-[360px] px-4 sm:px-6 md:px-8 lg:px-12">
+            {/* <div className="group relative w-full flex min-w-[360px] px-4 sm:px-6 md:px-8 lg:px-12 transition-all translate-x-full duration-300"> */}
             <ItemsList
-               items={!isTouched ? defaultItem : itemsToRender}
+               items={!isTouched ? defaultItems : itemsToRender}
                isTouched={isTouched}
             />
             {!!isTouched && (

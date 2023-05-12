@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const SignUpForm: React.FC = () => {
    return (
@@ -14,12 +15,15 @@ const SignUpForm: React.FC = () => {
                membership.
             </p>
             <input
+               disabled
                className="w-full p-2 px-4 bg-[#17101c80] rounded border border-[1px] border-borderGrey"
-               placeholder="Email address"
+               placeholder="Email address - disabled"
             />
-            <button className="px-6 py-3 bg-titleRed rounded font-bold">
-               Get Started
-            </button>
+            <Link href={"/browse"}>
+               <button className="px-6 py-3 bg-titleRed rounded font-bold">
+                  Get Started
+               </button>
+            </Link>
          </form>
       </div>
    );

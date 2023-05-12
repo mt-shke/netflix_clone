@@ -8,6 +8,7 @@ import { allItems } from "@/data/data";
 import { shuffleArray } from "@/utils/array";
 import BrowsePageBackground from "./main/BrowsePageBackground";
 import { useEffect, useState } from "react";
+import FetchSection from "./list/FetchSection";
 
 const BrowsePage: React.FC = () => {
    const [isClient, setIsClient] = useState(false);
@@ -21,6 +22,7 @@ const BrowsePage: React.FC = () => {
       setIsClient(true);
    }, []);
 
+   // onScrollDown , add new category
    return (
       <PageContainer className="min-h-screen bg-bgMainBlack">
          <BrowsePageHeader />
@@ -34,17 +36,10 @@ const BrowsePage: React.FC = () => {
                   <ListSlider data={data4} listTitle="Gems for You" />
                </section>
             )}
+            {!!isClient && <FetchSection />}
          </MainContainer>
       </PageContainer>
    );
 };
 
 export default BrowsePage;
-
-// export async function getser() {
-//    return {
-//       props: {
-//          data: allItems,
-//       },
-//    };
-// }
