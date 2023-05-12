@@ -7,7 +7,7 @@ import PageContainer from "@/components/container/PageContainer";
 
 const HomePage: React.FC = () => {
    return (
-      <PageContainer className="bg-bgMain">
+      <PageContainer>
          <Header />
          <MainContainer>
             <SignUpForm />

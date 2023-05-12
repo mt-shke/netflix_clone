@@ -24,7 +24,7 @@ const BrowsePage: React.FC = () => {
 
    // onScrollDown , add new category
    return (
-      <PageContainer className="min-h-screen bg-bgMainBlack">
+      <PageContainer>
          <BrowsePageHeader />
          <MainContainer className="relative w-full">
             <BrowsePageBackground />

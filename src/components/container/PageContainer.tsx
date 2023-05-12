@@ -5,7 +5,7 @@ const PageContainer: React.FC<IContainerLayout> = ({ children, className }) => {
       <div
          className={`${
             className ? className : ""
-         } h-full w-full mx-auto max-w-[1920px]`}
+         }  h-full w-full mx-auto max-w-[1920px] bg-bgMainBlack`}
       >
          {children}
       </div>
